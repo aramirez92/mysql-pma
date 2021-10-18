@@ -4,12 +4,14 @@ RUN pecl install mcrypt mbstring zip
 
 WORKDIR /var/www
 
+COPY ./docker/pma/config.inc.php /var/www/phpMyAdmin-5.1.1-english/config.inc.php
 COPY ./docker/pma/apache.conf /etc/apache2/sites-enabled/000-default.conf
 RUN curl https://files.phpmyadmin.net/phpMyAdmin/5.1.1/phpMyAdmin-5.1.1-english.zip --output pma.zip
 RUN unzip pma.zip
+RUN mv phpMyAdmin-5.1.1-english pma
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN a2enmod rewrite
-RUN docker-php-ext-install pdo pdo_mysql sodium gd zip && docker-php-ext-enable pdo pdo_mysql sodium gd zip
+RUN docker-php-ext-install pdo pdo_mysql mysqli sodium gd zip && docker-php-ext-enable pdo pdo_mysql mysqli sodium gd zip
 
 EXPOSE 80
 EXPOSE 443

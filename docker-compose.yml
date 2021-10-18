@@ -1,16 +1,18 @@
 version: "3"
 services:
   mysql:
+    volumes:
+      - ./data:/var/lib/mysql
     build:
       context: ./docker/mysql
       args:
         mysql_version: ${MYSQL_VERSION}
-    container_name: ${DOCKER_PROJECT_NAME}-mysql
+    container_name: ${DOCKER_PROJECT_NAME}-mysql-${MYSQL_VERSION}
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - ${MYSQL_PORT}:3306
     restart: always
@@ -19,7 +21,7 @@ services:
     build:
       context: ./
       dockerfile: ./docker/pma/Dockerfile
-    container_name: ${DOCKER_PROJECT_NAME}-pma
+    container_name: ${DOCKER_PROJECT_NAME}-pma-${PMA_VERSION}
     ports:
       - ${WEB_PORT}:80
     restart: always
