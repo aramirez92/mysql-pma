@@ -1,4 +1,4 @@
-# MySQL + PHPMyAdmin
+# Docker MySQL + PHPMyAdmin
 
 Setup mysql + phpmyadmin
 
